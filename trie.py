@@ -25,15 +25,14 @@ class Trie:
 		"""
 		Constructor: create a Trie Root Node.
 		"""
-		self._root = TrieNode()
-		r = self._root
+		self.__root = TrieNode()
 		
 
 	def insert(self, word):
 		"""
 		Insert word into the trie
 		"""
-		tnode = self._root
+		tnode = self.__root
 
 		for letter in word:
 			#print(letter)
@@ -53,7 +52,7 @@ class Trie:
 		find a word in the trie
 		"""
 
-		tnode = self._root
+		tnode = self.__root
 		findlist = [];
 		for letter in word:
 			#print(letter)

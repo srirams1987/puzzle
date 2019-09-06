@@ -1,9 +1,10 @@
 
 from trie import Trie
+import random
 
-class Puzzel:
+class Puzzle:
 	"""
-	Create a Puzzel and solves for all the words in the puzzel
+	Create a Puzzle and solves for all the words in the puzzle
 	"""
 	def __init__(self, size):
 		"""
@@ -12,28 +13,53 @@ class Puzzel:
 		2. constructs puzzel matrix
 
 		"""
-		self._trie = Trie();
+		self.__size = size+1
 		
-		self._read_words_from_dictionary()
-
-		self._initialize_trie()
-
-		pass
-
-	def _read_words_from_dictionary():
-		"""
-		"""
-		self._all_words
-		pass
-
-	def _intialize_trie():
-		"""
-		"""
-		for word in self._all_words:
-			self._trie.insert(word)
+		self.__trie = Trie();
 		
-		pass
+		self.__words_file = "words.txt"
 		
+		self.__read_words_from_dictionary()
+
+		self.__initialize_trie()
+
+		self.__puzzle = self.__create_puzzle()
+
+		print(self.__puzzle)
+
+
+
+
+	def __create_puzzle(self):
+		"""
+		private method to create the puzzle
+		"""
+		result = [] ;
+		for row in range(1, self.__size):
+			row = [chr(97+random.randint(0,25)) for x in range(1,self.__size)]
+			result.insert(0,row)
+		
+		return result
+
+
+	def __read_words_from_dictionary(self):
+		"""
+		private method to read all words from the dictionary to get list of strings
+		"""
+		fid = open(self.__words_file, "r")
+		self.__all_words = fid.readlines();
+		
+
+	def __initialize_trie(self):
+		"""
+		initialize the trie and insert all the words into the trie
+		"""
+		for word in self.__all_words:
+			#print(word)
+			self.__trie.insert(word)
+		
+		
+
 
 	def solve(self):
 		"""
@@ -43,6 +69,6 @@ class Puzzel:
 
 
 if __name__ == "__main__":
-	P = Puzzel(4);
+	P = Puzzle(10);
 	P.solve()
 
