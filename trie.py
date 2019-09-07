@@ -68,6 +68,24 @@ class Trie:
 		
 		return False;
 
+	def find_word_incremental(self, letter, node=None):
+		"""
+		find the word incrementally. 
+		return the node where the letter is being found
+		"""
+
+		if node is None:
+			node = self.__root;
+		children =  node.children;
+		if letter not in children:
+			return None
+		else:
+			return children[letter]
+
+			
+
+
+		pass
 
 if __name__ == "__main__":
 	T = Trie();
