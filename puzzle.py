@@ -128,7 +128,7 @@ class Puzzle:
 
 	def __solve_in_direction_(self, rind, cind, direction, word="", node=None ):
 		"""
-		get the next cell index in the direction as specified and get the next letter in the word
+		get the index in the "direction" given and find the word along that direction
 		"""
 		switcher ={
 			"UP"    : [rind-1, cind],
@@ -147,107 +147,6 @@ class Puzzle:
 		self.__solve_in_direction_( switcher[direction][0], switcher[direction][1], direction ,word, nextNode)
 
 	
-	def __solve_up(self, rind, cind, word="", node=None):
-		"""
-		find words in the UP direction 
-		"""
-		
-		nextNode, word = self.__incremental_word_check(rind, cind, word, node)
-		if nextNode is None:
-			return
-		self.__solve_up( rind-1, cind, word, nextNode)
-
-	def __solve_down(self, rind, cind , word="", node=None):
-		"""
-		find words in the DOWN direction 
-		"""
-		
-		nextNode, word= self.__incremental_word_check(rind, cind, word, node)
-		if nextNode is None:
-			return
-		self.__solve_down( rind+1, cind, word, nextNode)
-
-		
-
-
-	def __solve_right(self, rind, cind, word="", node=None):
-		"""
-		find words in the RIGHT direction
-		"""
-		
-		nextNode, word = self.__incremental_word_check(rind, cind, word, node)
-		if nextNode is None:
-			return
-		self.__solve_right(rind, cind+1, word, nextNode)
-
-	
-
-	def __solve_left(self, rind, cind, word="", node=None):
-		"""
-		find words in the LEFT direction
-		"""
-		
-		nextNode, word = self.__incremental_word_check(rind, cind, word, node)
-		if nextNode is None:
-			return
-		self.__solve_left( rind, cind-1,word,  nextNode)
-
-	
-
-	def __solve_diag_up_right(self, rind, cind, word="", node=None):
-		"""
-		find words in the DIAGONAL UP RIGHT direction
-		"""
-		
-		nextNode, word = self.__incremental_word_check(rind, cind, word, node)
-		if nextNode is None:
-			return
-		self.__solve_diag_up_right( rind-1, cind+1, word, nextNode)
-
-
-	def __solve_diag_up_left(self, rind, cind, word="", node=None):
-		"""
-		find words in teh DIAGONAL UP LEFT direction
-		"""
-		
-		nextNode, word = self.__incremental_word_check(rind, cind, word, node)
-		if nextNode is None:
-			return
-		self.__solve_diag_up_left( rind-1, cind-1, word, nextNode)
-
-
-	def __solve_diag_down_right(self, rind, cind, word="", node=None):
-		"""
-		find words in the DIAGONAL DOWN RIGHT direction 
-		"""
-		
-		nextNode, word = self.__incremental_word_check(rind, cind, word, node)
-		if nextNode is None:
-			return
-		self.__solve_diag_down_right( rind+1, cind+1,word, nextNode	)
-
-
-	def __solve_diag_down_left(self, rind, cind, word="", node=None):
-		"""
-		find words in the DIAGONAL DOWN LEFT direction
-		"""
-		
-		nextNode, word = self.__incremental_word_check(rind, cind, word, node)
-		if nextNode is None:
-			return
-		self.__solve_diag_down_left( rind+1, cind-1, word, nextNode)
-
-	def __solve_backwards(self, rind, cind, word="", node=None):
-		"""
-		find words in the BACKWARDS
-		"""
-
-		
-		nextNode, word = self.__incremental_word_check(rind, cind, word, node)
-		if nextNode is None:
-			return
-		self.__solve_backwards( rind, cind-1, word, nextNode)
-
 
 	def __incremental_word_check(self, rind, cind, word, node):
 		"""
