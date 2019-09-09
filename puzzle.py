@@ -4,9 +4,9 @@ import random
 
 class Puzzle:
 	"""
-	Create a Puzzle and solves for all the words in the puzzle
+	Create a Puzzle and solve for all the words in the puzzle
 	"""
-	def __init__(self, size=None, words_dictionary= None, puzzle_matrix=None):
+	def __init__(self, size=None, words_dictionary=None, puzzle_matrix=None):
 		"""
 		constructs the puzzel and initalizes teach cell with a letter at random
 		1. reads the dictionary for all words
@@ -17,24 +17,14 @@ class Puzzle:
 		#initialize the trie data structure
 		self.__trie = Trie();
 		
-		#default get the words from words.txt
-		#use the input list of words, this can be used for testing 
-		if words_dictionary is None:
-			self.__words_file = "words.txt"
-			self.__read_words_from_dictionary()
-		else:
-			self.__all_words = words_dictionary;
-
-		#insert the words in the trie
-		self.__initialize_trie()
-
+		
 
 		#puzzle_matrix can be initialized from the input or will be created at random.
 		#this will make the algorithm testable 
 		if puzzle_matrix is None:
 			#create puzzle at random
-			if size is  None:
-				raise("size cannot be None")
+			if size is None or size<=0 or (not isinstance(size, int)):
+				raise(ValueError ,"size cannot be None, size must be >0 int")
 			self.__size = size;
 			self.__puzzle = self.__create_puzzle()
 			
@@ -47,17 +37,35 @@ class Puzzle:
 			else:
 				raise(TypeError, "list must be a sq matrix(required)")
 
-		
-		self.words_found_in_puzzle=[];
-		#print(self.__puzzle)
-		#print(self.__size)
+		#default get the words from words.txt
+		#use the input list of words, this can be used for testing 
+		if words_dictionary is None:
+			self.__words_file = "words.txt"
+			self.__read_words_from_dictionary()
+		else:
+			self.__all_words = words_dictionary;
 
+		#insert the words in the trie
+		self.__initialize_trie()
+
+		self.words_found_in_puzzle=[];
+		
 
 
 	def __is_puzzle_sq_matrix(self, puzzle):
 		"""
+		Checks if the puzzle is a sq matrix or not
 		"""
-		#TODO
+		if not isinstance(puzzle, list):
+			return False;
+
+		nrows = len(puzzle);
+		for rows in puzzle:
+			if not isinstance(rows, list):
+				return False;
+			if len(rows) != nrows:
+				return False
+
 		return True;
 
 
@@ -78,7 +86,7 @@ class Puzzle:
 		private method to read all words from the dictionary to get list of strings
 		"""
 		fid = open(self.__words_file, "r")
-		self.__all_words = fid.readlines();
+		self.__all_words = fid.read().splitlines();
 		
 
 	def __initialize_trie(self):
@@ -97,17 +105,20 @@ class Puzzle:
 
 	def get_dictionary(self):
 		"""
+		return the words in the dictionary
 		"""
 		return self.__all_words
 
 	def get_size(self):
 		"""
+		return the size of the puzzle
 		"""
 		return self.__size
 
 
 	def __is_valid_rc(self, rind, cind):
 		"""
+		private method to validate the row index and the col index 
 		"""
 		if rind < 0 or cind < 0 or rind >= self.__size or cind >= self.__size: 
 			return False;
@@ -117,6 +128,7 @@ class Puzzle:
 	
 	def __solve_up(self, rind, cind, word="", node=None):
 		"""
+		find words in the UP direction 
 		"""
 		
 		nextNode, word = self.__incremental_word_check(rind, cind, word, node)
@@ -126,6 +138,7 @@ class Puzzle:
 
 	def __solve_down(self, rind, cind , word="", node=None):
 		"""
+		find words in the DOWN direction 
 		"""
 		
 		nextNode, word= self.__incremental_word_check(rind, cind, word, node)
@@ -138,6 +151,7 @@ class Puzzle:
 
 	def __solve_right(self, rind, cind, word="", node=None):
 		"""
+		find words in the RIGHT direction
 		"""
 		
 		nextNode, word = self.__incremental_word_check(rind, cind, word, node)
@@ -149,6 +163,7 @@ class Puzzle:
 
 	def __solve_left(self, rind, cind, word="", node=None):
 		"""
+		find words in the LEFT direction
 		"""
 		
 		nextNode, word = self.__incremental_word_check(rind, cind, word, node)
@@ -160,6 +175,7 @@ class Puzzle:
 
 	def __solve_diag_up_right(self, rind, cind, word="", node=None):
 		"""
+		find words in the DIAGONAL UP RIGHT direction
 		"""
 		
 		nextNode, word = self.__incremental_word_check(rind, cind, word, node)
@@ -170,6 +186,7 @@ class Puzzle:
 
 	def __solve_diag_up_left(self, rind, cind, word="", node=None):
 		"""
+		find words in teh DIAGONAL UP LEFT direction
 		"""
 		
 		nextNode, word = self.__incremental_word_check(rind, cind, word, node)
@@ -180,6 +197,7 @@ class Puzzle:
 
 	def __solve_diag_down_right(self, rind, cind, word="", node=None):
 		"""
+		find words in the DIAGONAL DOWN RIGHT direction 
 		"""
 		
 		nextNode, word = self.__incremental_word_check(rind, cind, word, node)
@@ -190,6 +208,7 @@ class Puzzle:
 
 	def __solve_diag_down_left(self, rind, cind, word="", node=None):
 		"""
+		find words in the DIAGONAL DOWN LEFT direction
 		"""
 		
 		nextNode, word = self.__incremental_word_check(rind, cind, word, node)
@@ -200,6 +219,7 @@ class Puzzle:
 
 	def __incremental_word_check(self, rind, cind, word, node):
 		"""
+		private method to incrementally check if the word exists in the Trie
 		"""
 		if not self.__is_valid_rc( rind, cind):
 			return None, None
@@ -220,8 +240,7 @@ class Puzzle:
 		solves and returns a list of all the words in the puzzel that are in the dictionary
 		"""
 			
-		#print(self.__size)
-		#print(len(self.__puzzle), len(self.__puzzle[0]))
+		
 		for rind in range(0, self.__size):
 			for cind in range(0, self.__size):
 				#print(rind, cind) 
@@ -244,7 +263,7 @@ if __name__ == "__main__":
 		                       ["c","i","t"],
 						       ["e","i","d"]]
 
-	P = Puzzle(10, words, puzzle);
+	P = Puzzle(10);
 
 	res = P.solve()
 
