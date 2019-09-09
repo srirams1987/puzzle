@@ -125,6 +125,27 @@ class Puzzle:
 		else:
 			return True;
 
+
+	def __solve_in_direction_(self, rind, cind, direction, word="", node=None ):
+		"""
+		get the next cell index in the direction as specified and get the next letter in the word
+		"""
+		switcher ={
+			"UP"    : [rind-1, cind],
+			"DOWN"  : [rind+1, cind],
+			"RIGHT" : [rind, cind+1],
+			"LEFT"  : [rind, cind-1],
+			"DIAG_UP_RIGHT"  : [rind-1, cind+1]	,
+			"DIAG_UP_LEFT"   : [rind-1, cind-1],
+			"DIAG_DOWN_RIGHT" : [rind+1, cind+1],
+			"DIAG_DOWN_LEFT"  : [rind+1, cind-1],
+				}
+			
+		nextNode, word = self.__incremental_word_check(rind, cind, word, node)
+		if nextNode is None:
+			return
+		self.__solve_in_direction_( switcher[direction][0], switcher[direction][1], direction ,word, nextNode)
+
 	
 	def __solve_up(self, rind, cind, word="", node=None):
 		"""
@@ -254,16 +275,15 @@ class Puzzle:
 		
 		for rind in range(0, self.__size):
 			for cind in range(0, self.__size):
-				#print(rind, cind) 
-				self.__solve_right(rind, cind)
-				self.__solve_left(rind, cind)
-				self.__solve_up(rind, cind)
-				self.__solve_down(rind, cind)
-				self.__solve_diag_up_right(rind, cind)
-				self.__solve_diag_up_left(rind, cind)
-				self.__solve_diag_down_right(rind, cind)
-				self.__solve_diag_down_left(rind, cind)
-				self.__solve_backwards(rind, cind)
+				self.__solve_in_direction_(rind, cind, "UP")
+				self.__solve_in_direction_(rind, cind, "DOWN")
+				self.__solve_in_direction_(rind, cind, "RIGHT")
+				self.__solve_in_direction_(rind, cind, "LEFT")
+				self.__solve_in_direction_(rind, cind, "DIAG_DOWN_LEFT")
+				self.__solve_in_direction_(rind, cind, "DIAG_DOWN_RIGHT")
+				self.__solve_in_direction_(rind, cind, "DIAG_UP_LEFT")
+				self.__solve_in_direction_(rind, cind, "DIAG_UP_RIGHT")
+
 
 		return self.words_found_in_puzzle
 
