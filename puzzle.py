@@ -216,6 +216,17 @@ class Puzzle:
 			return
 		self.__solve_diag_down_left( rind+1, cind-1, word, nextNode)
 
+	def __solve_backwards(self, rind, cind, word="", node=None):
+		"""
+		find words in the BACKWARDS
+		"""
+
+		
+		nextNode, word = self.__incremental_word_check(rind, cind, word, node)
+		if nextNode is None:
+			return
+		self.__solve_backwards( rind, cind-1, word, nextNode)
+
 
 	def __incremental_word_check(self, rind, cind, word, node):
 		"""
@@ -252,19 +263,8 @@ class Puzzle:
 				self.__solve_diag_up_left(rind, cind)
 				self.__solve_diag_down_right(rind, cind)
 				self.__solve_diag_down_left(rind, cind)
+				self.__solve_backwards(rind, cind)
 
 		return self.words_found_in_puzzle
 
 
-if __name__ == "__main__":
-
-	words = ["car","bus","bar","kind","auto","ace","aid"]
-	puzzle = [["a","b","a"],
-		                       ["c","i","t"],
-						       ["e","i","d"]]
-
-	P = Puzzle(10);
-
-	res = P.solve()
-
-	print(res)
