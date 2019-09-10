@@ -66,4 +66,5 @@ Assumptions:
 2. The implementation assumes that the same cell in the puzzle can be in multiple words 
 3. The implementation assumes that the puzzle_matrix is a square matrix, thus takes only one "size"  argument and constructs a square matrix is size-X-size dimensions
 4. The implementation requires that the puzzle_matrix that is supplied as input is also a square_matrix
+5. Tested with python 2.7
 
