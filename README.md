@@ -1,4 +1,7 @@
 
+# Introduction
+This repository has a automated way to solve a puzzle to find all the words from a grid of letters. The puzzle can be a random random of letters in which words can be formed by combining consecutive letters all 8 direction at any index. A dictionary of words is spplied as a txt file or can be supplied as input.
+
 # How To
 ## puzzle_solver.py
 ``` bash
@@ -48,7 +51,7 @@ $ python puzzle_solver 10
 ```
 
 4. Test :
-The $/test directory has the tests for Trie class and the Puzzle class. These tests uses python "unitests" package 
+The test directory has the tests for Trie class and the Puzzle class. These tests uses python "unitests" package 
 ``` bash
 $ python test_trie.py
 
