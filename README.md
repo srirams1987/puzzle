@@ -1,24 +1,26 @@
 
-How to run
+# How To
+## puzzle_solver.py
 $ python puzzle_solver.py 15
 
-------
-To run the tests:
 
-$cd test
+## Run the tests:
+
 $ python test_puzzle.py
 $ python test_trie.py
 
-------
-How to use the class in python 
+### To run all tests
+$ python -m unittest discover test/.
 
+## How to use the class in python 
+``` python
 >>> from puzzle import Puzzle
 >>> P = Puzzle(15)
 >>> result = P.solve()
 
 >>> P = Puzzle(puzzle_matrix=[<a-square_matrix-list-of-lists>], words_dictionary=["car","bus","bike","motor"])
 >>> result = P.solve()
-
+```
 
 Contents:
 
