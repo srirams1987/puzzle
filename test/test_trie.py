@@ -19,11 +19,7 @@ class TestTrie(unittest.TestCase):
 		self.trie = trie;
 
 		
-	@classmethod
-	def tearDownClass(self):
-		"""
-		"""
-		pass
+		
 
 	def test_insert_and_find_word(self):
 		"""
@@ -39,6 +35,34 @@ class TestTrie(unittest.TestCase):
 		self.assertTrue(T.find_word("word1"))
 		#find some other word -> False
 		self.assertFalse(T.find_word("otherword"))
+
+	def test_insert_find_multiple_words(self):
+		"""
+		Test to insert and find multiple words 
+		also with numbers 
+		"""
+		T = self.trie.Trie()
+
+		T.insert("word")
+		T.insert("word-endings")
+		T.insert("123")
+		T.insert("12345678")
+
+		self.assertTrue(T.find_word("word"))
+
+		self.assertFalse(T.find_word("word-e"))
+	
+		self.assertTrue(T.find_word("word-endings"))
+
+		self.assertTrue(T.find_word("123"))
+
+		self.assertTrue(T.find_word("12345678"))
+
+		self.assertFalse(T.find_word("123456"))
+
+		self.assertFalse(T.find_word("123456789"))
+
+
 	
 	def test_find_word_incremental(self):
 		"""
@@ -82,6 +106,18 @@ class TestTrie(unittest.TestCase):
 
 
 		
+	def test_negative(self):
+		"""
+		test for negative exceptions that are raised by Trie class
+		"""
+		T = self.trie.Trie()
+		T.insert("words")
+		#insert and find works only for words 
+		self.assertRaises(TypeError, lambda: T.insert(234))
+		self.assertRaises(TypeError, lambda: T.find_word(1234))
+		#find_word_incremental works only for letter
+		self.assertRaises(TypeError, lambda: T.find_word_incremental(1))
+		self.assertRaises(ValueError, lambda: T.find_word_incremental("abcd"))
 
 
 
@@ -92,4 +128,4 @@ class TestTrie(unittest.TestCase):
 if __name__ == "__main__":
 	
 	unittest.main(verbosity=2)
-	pass
+	

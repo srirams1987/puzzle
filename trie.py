@@ -32,10 +32,13 @@ class Trie:
 		"""
 		Insert word into the trie
 		"""
+		if not isinstance(word, str):
+			raise(TypeError, "only string are allowed")
+
+
 		tnode = self.__root
 
 		for letter in word:
-			#print(letter)
 			children = tnode.children
 			if letter not in children.keys():
 				children[letter] = TrieNode();
@@ -52,12 +55,16 @@ class Trie:
 		find a word in the trie
 		"""
 
+		if not isinstance(word, str):
+			raise(TypeError, "only string are allowed")
+
+
+
 		tnode = self.__root
 		findlist = [];
 		for letter in word:
-			#print(letter)
 			children = tnode.children
-			#print(children)
+
 			if letter not in children:
 				return False
 			tnode = children[letter];
@@ -73,6 +80,11 @@ class Trie:
 		find the word incrementally. 
 		return the node where the letter is being found
 		"""
+		if not isinstance(letter, str):
+			raise(TypeError, "only string are allowed")
+
+		if len(letter)!=1:
+			raise(ValueError, "letter(len==1) is required")
 
 		if node is None:
 			node = self.__root;
@@ -84,12 +96,5 @@ class Trie:
 
 			
 
-
-		pass
-
-if __name__ == "__main__":
-	T = Trie();
-	T.insert("word1")
-	T.find_word("word1")
 
 

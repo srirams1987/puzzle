@@ -3,7 +3,9 @@ import os,sys,inspect
 
 
 class TestPuzzle(unittest.TestCase):
-	
+	"""
+	Unit test for Puzzle class 
+	"""
 
 	@classmethod
 	def setUpClass(self):
@@ -20,24 +22,19 @@ class TestPuzzle(unittest.TestCase):
 		self.test_puzzle_horizontal = [["c","a","r"],
 					 ["b","u","s"],
 					 ["b","a","r"]]
-		self.test_puzzle_diag = [["k","","",""],
-					["","i","",""],
-					["","","n",""],
-					["","","","d"]]
-		self.test_puzzle_vertical = [["a","","",""],
-						["u","","",""],
-						["t","","",""],
-						["o","","",""]]
+		self.test_puzzle_diag = [["k","a","a","a"],
+					["a","i","a","a"],
+					["a","a","n","a"],
+					["a","a","a","d"]]
+		self.test_puzzle_vertical = [["a","c","a","c"],
+						["u","1","1","1"],
+						["t","2","2","2"],
+						["o","3","3","3"]]
 		self.test_down_diag = [["a","b","a"],
 		                       ["c","i","t"],
 						       ["m","i","d"]]
 
 		
-	@classmethod
-	def tearDownClass(self):
-		"""
-		"""
-		pass
 
 	def test_horozontal_right(self):
 		"""
@@ -86,6 +83,7 @@ class TestPuzzle(unittest.TestCase):
 
 	def test_negative(self):
 		"""
+		Test for negative cases of the Puzzle constructor 
 		"""
 		self.assertRaises(ValueError, lambda: self.Puzzle(-10))
 
