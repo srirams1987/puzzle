@@ -27,13 +27,12 @@ class TestTrie(unittest.TestCase):
 		insert words 
 
 		"""
-		#insert word
-		T = self.trie.Trie();
 		
+		T = self.trie.Trie();
+		#insert word
 		T.insert( "word1")
-		#find that word -> True
+		#find
 		self.assertTrue(T.find_word("word1"))
-		#find some other word -> False
 		self.assertFalse(T.find_word("otherword"))
 
 	def test_insert_find_multiple_words(self):
@@ -118,10 +117,6 @@ class TestTrie(unittest.TestCase):
 		#find_word_incremental works only for letter
 		self.assertRaises(TypeError, lambda: T.find_word_incremental(1))
 		self.assertRaises(ValueError, lambda: T.find_word_incremental("abcd"))
-
-
-
-
 
 
 
