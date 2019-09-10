@@ -17,7 +17,7 @@ class TestPuzzle(unittest.TestCase):
 		sys.path.insert(0,parentdir) 
 
 		from puzzle import Puzzle
-		self.Puzzle = Puzzle;
+		self.Puzzle = Puzzle
 		self.test_words = ["car","bus","bar","kind","auto","acm","aid","aim"]
 		self.test_puzzle_horizontal = [["c","a","r"],
 					 ["b","u","s"],
@@ -44,7 +44,7 @@ class TestPuzzle(unittest.TestCase):
 		self.assertEqual(P.get_size(), 3);
 		self.assertEqual(P.get_dictionary(), self.test_words)
 		self.assertEqual(P.get_puzzle(), self.test_puzzle_horizontal)
-		res = P.solve();
+		res = P.solve()
 		self.assertEqual(res, ['car', 'bus', 'bar'])
 
 	def test_vertical_down(self):
@@ -53,7 +53,7 @@ class TestPuzzle(unittest.TestCase):
 		"""
 		P = self.Puzzle(None, self.test_words, self.test_puzzle_vertical )
 		
-		res = P.solve();
+		res = P.solve()
 		self.assertEqual(res, ["auto"])
 
 
@@ -63,7 +63,7 @@ class TestPuzzle(unittest.TestCase):
 		"""
 		P = self.Puzzle(None, self.test_words, self.test_puzzle_diag )
 		
-		res = P.solve();
+		res = P.solve()
 		self.assertEqual(res, ["kind"])
 
 	def test_downdiag(self):
@@ -72,12 +72,12 @@ class TestPuzzle(unittest.TestCase):
 		"""
 		P = self.Puzzle(None, self.test_words, self.test_down_diag )
 		
-		res = P.solve();
+		res = P.solve()
 		self.assertEqual(res, ["acm", "aid","aim"])
 
 
 	@unittest.skip(1)
-	def test_puzlle_all_direction():
+	def test_puzzle_all_direction():
 		"""
 		"""
 

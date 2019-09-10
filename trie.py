@@ -12,7 +12,7 @@ class TrieNode:
 		"""
 		constructor
 		"""
-		self.children = {};
+		self.children = {}
 		self.endNode = False
 
 
@@ -41,11 +41,11 @@ class Trie:
 		for letter in word:
 			children = tnode.children
 			if letter not in children.keys():
-				children[letter] = TrieNode();
+				children[letter] = TrieNode()
 			
-			tnode = children[letter];
+			tnode = children[letter]
 
-		tnode.endNode = True;
+		tnode.endNode = True
 
 		
 
@@ -61,19 +61,19 @@ class Trie:
 
 
 		tnode = self.__root
-		findlist = [];
+		findlist = []
 		for letter in word:
 			children = tnode.children
 
 			if letter not in children:
 				return False
-			tnode = children[letter];
+			tnode = children[letter]
 			findlist.append(letter)
 		
 		if tnode.endNode is True:
-			return True;
+			return True
 		
-		return False;
+		return False
 
 	def find_word_incremental(self, letter, node=None):
 		"""
@@ -87,8 +87,8 @@ class Trie:
 			raise(ValueError, "letter(len==1) is required")
 
 		if node is None:
-			node = self.__root;
-		children =  node.children;
+			node = self.__root
+		children =  node.children
 		if letter not in children:
 			return None
 		else:

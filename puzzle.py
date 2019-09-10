@@ -15,7 +15,7 @@ class Puzzle:
 		"""
 		
 		#initialize the trie data structure
-		self.__trie = Trie();
+		self.__trie = Trie()
 		
 		
 
@@ -25,7 +25,7 @@ class Puzzle:
 			#create puzzle at random
 			if size is None or size<=0 or (not isinstance(size, int)):
 				raise(ValueError ,"size cannot be None, size must be >0 int")
-			self.__size = size;
+			self.__size = size
 			self.__puzzle = self.__create_puzzle()
 			
 			
@@ -53,7 +53,7 @@ class Puzzle:
 		self.__initialize_trie()
 
 		#result list 
-		self.words_found_in_puzzle=[];
+		self.words_found_in_puzzle=[]
 		
 
 
@@ -64,16 +64,16 @@ class Puzzle:
 		Checks if the puzzle is a sq matrix(list of lists ) or not
 		"""
 		if not isinstance(puzzle, list):
-			return False;
+			return False
 
-		nrows = len(puzzle);
+		nrows = len(puzzle)
 		for rows in puzzle:
 			if not isinstance(rows, list):
-				return False;
+				return False
 			if len(rows) != nrows:
 				return False
 
-		return True;
+		return True
 
 
 	def __create_puzzle(self):
@@ -81,7 +81,7 @@ class Puzzle:
 		private method to create the puzzle
 		each cell is a random letter a - z 
 		"""
-		result_puzzle = [] ;
+		result_puzzle = [] 
 		for row in range(0, self.__size):
 			row = [chr(97+random.randint(0,25)) for index in range(0,self.__size)]
 			result_puzzle.insert(0,row)
@@ -95,7 +95,7 @@ class Puzzle:
 		assumes the word-file is present in the current directory
 		"""
 		fid = open(self.__words_file, "r")
-		self.__all_words = fid.read().splitlines();
+		self.__all_words = fid.read().splitlines()
 		
 
 	def __initialize_trie(self):
@@ -111,9 +111,9 @@ class Puzzle:
 		private method to validate the row index and the col index 
 		"""
 		if rind < 0 or cind < 0 or rind >= self.__size or cind >= self.__size: 
-			return False;
+			return False
 		else:
-			return True;
+			return True
 
 
 	def __solve_in_direction(self, row_ind, col_ind, direction, word="", node=None ):
@@ -161,7 +161,7 @@ class Puzzle:
 		"""
 		solves and returns a list of all the words in the puzzel that are in the dictionary
 		"""		
-		self.words_found_in_puzzle = [];
+		self.words_found_in_puzzle = []
 		for rind in range(0, self.__size):
 			for cind in range(0, self.__size):
 				self.__solve_in_direction(rind, cind, "UP")
