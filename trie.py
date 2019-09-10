@@ -25,7 +25,7 @@ class Trie:
 		"""
 		Constructor: create a Trie Root Node.
 		"""
-		self.__root = TrieNode()
+		self._root = TrieNode()
 		
 
 	def insert(self, word):
@@ -36,7 +36,7 @@ class Trie:
 			raise(TypeError, "only string are allowed")
 
 
-		tnode = self.__root
+		tnode = self._root
 
 		for letter in word:
 			children = tnode.children
@@ -60,7 +60,7 @@ class Trie:
 
 
 
-		tnode = self.__root
+		tnode = self._root
 		findlist = []
 		for letter in word:
 			children = tnode.children
@@ -87,7 +87,7 @@ class Trie:
 			raise(ValueError, "letter(len==1) is required")
 
 		if node is None:
-			node = self.__root
+			node = self._root
 		children =  node.children
 		if letter not in children:
 			return None

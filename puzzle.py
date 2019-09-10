@@ -15,7 +15,7 @@ class Puzzle:
 		"""
 		
 		#initialize the trie data structure
-		self.__trie = Trie()
+		self._trie = Trie()
 		
 		
 
@@ -25,32 +25,32 @@ class Puzzle:
 			#create puzzle at random
 			if size is None or size<=0 or (not isinstance(size, int)):
 				raise(ValueError ,"size cannot be None, size must be >0 int")
-			self.__size = size
-			self.__puzzle = self.__create_puzzle()
+			self._size = size
+			self._puzzle = self._create_puzzle()
 			
 			
 		else:
 			#initialize puzzle from the input
-			if self.__is_puzzle_sq_matrix(puzzle_matrix) is True:
-				self.__size = len(puzzle_matrix)
-				self.__puzzle = puzzle_matrix
+			if self._is_puzzle_sq_matrix(puzzle_matrix) is True:
+				self._size = len(puzzle_matrix)
+				self._puzzle = puzzle_matrix
 			else:
 				raise(TypeError, "list must be a sq matrix(required)")
 
 		#default get the words from words.txt
 		#use the input list of words, this can be used for testing 
 		if words_dictionary is None:
-			self.__words_file = "words.txt"
-			self.__read_words_from_dictionary()
+			self._words_file = "words.txt"
+			self._read_words_from_dictionary()
 		else:
 			if isinstance(words_dictionary, list):
-				self.__all_words = words_dictionary
+				self._all_words = words_dictionary
 			else:
 				raise(TypeError, 'words_dictionary must be a list of words')
 
 
 		#insert the words in the trie
-		self.__initialize_trie()
+		self._initialize_trie()
 
 		#result list 
 		self.words_found_in_puzzle=[]
@@ -59,7 +59,7 @@ class Puzzle:
 
 
 	#----- Private Methods ----#
-	def __is_puzzle_sq_matrix(self, puzzle):
+	def _is_puzzle_sq_matrix(self, puzzle):
 		"""
 		Checks if the puzzle is a sq matrix(list of lists ) or not
 		"""
@@ -76,47 +76,47 @@ class Puzzle:
 		return True
 
 
-	def __create_puzzle(self):
+	def _create_puzzle(self):
 		"""
 		private method to create the puzzle
 		each cell is a random letter a - z 
 		"""
 		result_puzzle = [] 
-		for row in range(0, self.__size):
-			row = [chr(97+random.randint(0,25)) for index in range(0,self.__size)]
+		for row in range(0, self._size):
+			row = [chr(97+random.randint(0,25)) for index in range(0,self._size)]
 			result_puzzle.insert(0,row)
 		
 		return result_puzzle
 
 
-	def __read_words_from_dictionary(self):
+	def _read_words_from_dictionary(self):
 		"""
 		private method to read all words from the dictionary to get list of strings
 		assumes the word-file is present in the current directory
 		"""
-		fid = open(self.__words_file, "r")
-		self.__all_words = fid.read().splitlines()
+		fid = open(self._words_file, "r")
+		self._all_words = fid.read().splitlines()
 		
 
-	def __initialize_trie(self):
+	def _initialize_trie(self):
 		"""
 		initialize the trie and insert all the words into the trie
 		"""
-		for word in self.__all_words:
-			self.__trie.insert(word)
+		for word in self._all_words:
+			self._trie.insert(word)
 	
 
-	def __is_valid_rc(self, rind, cind):
+	def _is_valid_rc(self, rind, cind):
 		"""
 		private method to validate the row index and the col index 
 		"""
-		if rind < 0 or cind < 0 or rind >= self.__size or cind >= self.__size: 
+		if rind < 0 or cind < 0 or rind >= self._size or cind >= self._size: 
 			return False
 		else:
 			return True
 
 
-	def __solve_in_direction(self, row_ind, col_ind, direction, word="", node=None ):
+	def _solve_in_direction(self, row_ind, col_ind, direction, word="", node=None ):
 		"""
 		get the index in the "direction" given and find the word along that direction
 		"""
@@ -131,23 +131,23 @@ class Puzzle:
 			"DIAG_DOWN_LEFT"  : [row_ind+1, col_ind-1],
 				}
 			
-		nextNode, word = self.__incremental_word_check(row_ind, col_ind, word, node)
+		nextNode, word = self._incremental_word_check(row_ind, col_ind, word, node)
 		if nextNode is None:
 			return
-		self.__solve_in_direction( switcher[direction][0], switcher[direction][1], direction ,word, nextNode)
+		self._solve_in_direction( switcher[direction][0], switcher[direction][1], direction ,word, nextNode)
 
 	
 
-	def __incremental_word_check(self, row_ind, col_ind, word, node):
+	def _incremental_word_check(self, row_ind, col_ind, word, node):
 		"""
 		private method to incrementally check if the word exists in the Trie
 		"""
-		if not self.__is_valid_rc( row_ind, col_ind):
+		if not self._is_valid_rc( row_ind, col_ind):
 			return None, None
-		nextNode =  self.__trie.find_word_incremental(self.__puzzle[row_ind][col_ind], node) 
+		nextNode =  self._trie.find_word_incremental(self._puzzle[row_ind][col_ind], node) 
 		if nextNode is None:
 			return 	nextNode, word 
-		word = str(word) + self.__puzzle[row_ind][col_ind]
+		word = str(word) + self._puzzle[row_ind][col_ind]
 				 
 		if nextNode.endNode is True:
 			self.words_found_in_puzzle.append(word)
@@ -162,16 +162,16 @@ class Puzzle:
 		solves and returns a list of all the words in the puzzel that are in the dictionary
 		"""		
 		self.words_found_in_puzzle = []
-		for rind in range(0, self.__size):
-			for cind in range(0, self.__size):
-				self.__solve_in_direction(rind, cind, "UP")
-				self.__solve_in_direction(rind, cind, "DOWN")
-				self.__solve_in_direction(rind, cind, "RIGHT")
-				self.__solve_in_direction(rind, cind, "LEFT")
-				self.__solve_in_direction(rind, cind, "DIAG_DOWN_LEFT")
-				self.__solve_in_direction(rind, cind, "DIAG_DOWN_RIGHT")
-				self.__solve_in_direction(rind, cind, "DIAG_UP_LEFT")
-				self.__solve_in_direction(rind, cind, "DIAG_UP_RIGHT")
+		for rind in range(0, self._size):
+			for cind in range(0, self._size):
+				self._solve_in_direction(rind, cind, "UP")
+				self._solve_in_direction(rind, cind, "DOWN")
+				self._solve_in_direction(rind, cind, "RIGHT")
+				self._solve_in_direction(rind, cind, "LEFT")
+				self._solve_in_direction(rind, cind, "DIAG_DOWN_LEFT")
+				self._solve_in_direction(rind, cind, "DIAG_DOWN_RIGHT")
+				self._solve_in_direction(rind, cind, "DIAG_UP_LEFT")
+				self._solve_in_direction(rind, cind, "DIAG_UP_RIGHT")
 
 
 		return self.words_found_in_puzzle
@@ -180,20 +180,20 @@ class Puzzle:
 		"""
 		Get the state of the puzzle
 		"""
-		return self.__puzzle
+		return self._puzzle
 		
 
 	def get_dictionary(self):
 		"""
 		return the words in the dictionary
 		"""
-		return self.__all_words
+		return self._all_words
 
 	def get_size(self):
 		"""
 		return the size of the puzzle
 		"""
-		return self.__size
+		return self._size
 
 
 
